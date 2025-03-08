@@ -30,7 +30,9 @@ function ViewDirectorBasedOnUserAuthStatus({ children }: ViewDirectorProps) {
   if (!user && pathname === "/register") {
     return children;
   }
-
+  if (!user && pathname === "/login") {
+    return children;
+  }
   // what the user should see if they are logged in
   if (user) {
     return (
