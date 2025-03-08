@@ -68,8 +68,7 @@ export default function LoginPage() {
             value={formData.password}
             onChange={handleChange}
             required
-            >
-            
+          >
           </Form.Control>
         </Form.Group>
 
