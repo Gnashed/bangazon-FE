@@ -1,6 +1,7 @@
 'use client';
 
 import { useState} from 'react';
+import { useRouter } from 'next/navigation';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { registerUserEmailandPassword } from '@/utils/auth';
@@ -11,6 +12,7 @@ interface formDataProps {
 };
 
 export default function Register() {
+  const router = useRouter();
   const [formData, setFormData] = useState<formDataProps>({
     email: '',
     password: '',
@@ -31,7 +33,12 @@ export default function Register() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    registerUserEmailandPassword(formData.email, formData.password);
+    try {
+      registerUserEmailandPassword(formData.email, formData.password);
+      router.push('/');
+    } catch (error) {
+      console.log(error, "handleSubmit -- Something went wrong registering the user.");
+    }
   };
 
   return (
@@ -46,6 +53,7 @@ export default function Register() {
             placeholder="Enter email"
             value={formData.email}
             onChange={handleChange}
+            required
           />
           {/* <Form.Text className="text-muted">
             We&apos;ll never share your email with anyone else.
@@ -58,7 +66,10 @@ export default function Register() {
             type="password"
             placeholder="Enter a password"
             value={formData.password}
-            onChange={handleChange}>
+            onChange={handleChange}
+            required
+            >
+            
           </Form.Control>
         </Form.Group>
 
