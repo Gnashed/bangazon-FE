@@ -1,5 +1,36 @@
 import { auth } from './client';
-import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { 
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+
+const registerUserEmailandPassword = async (email:string, password: string) => {
+  const loginEmail = email;
+  const loginPassword = password;
+
+  try {
+    // The return value we get back from Firebase is a promise, so we can use await.
+    const userCredential = await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
+    console.log(userCredential.user);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const loginUserEmailAndPasswordCombo = async (email:string, password: string) => {
+  const loginEmail = email;
+  const loginPassword = password;
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+    console.log(userCredential.user);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const signInWithGoogle = async () => {
   try {
@@ -23,4 +54,4 @@ const signOutUser = async () => {
 };
 
 // as keyword renames signOutUser to signOut when exporting. When you import it, you would use the name "signOut".
-export { signInWithGoogle, signOutUser as signOut };
+export { registerUserEmailandPassword, loginUserEmailAndPasswordCombo, signInWithGoogle, signOutUser as signOut };
