@@ -1,17 +1,7 @@
 import { clientCredentials } from "@/utils/client";
+import { UserPayload, UserResponse } from "@/types/api";
 
 const endpoint = clientCredentials.databaseURL;
-
-interface UserPayload {
-  uid: string;
-  isSeller: boolean;
-};
-
-interface UserResponse {
-  id: number;
-  uid: string;
-  isSeller: boolean;
-};
 
 const createUserData = async (payload: UserPayload): Promise<UserResponse> => {
   try {
