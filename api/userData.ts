@@ -3,6 +3,7 @@ import { clientCredentials } from "@/utils/client";
 const endpoint = clientCredentials.databaseURL;
 
 interface UserPayload {
+  uid: string;
   isSeller: boolean;
 };
 

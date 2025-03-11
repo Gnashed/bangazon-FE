@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { registerUserEmailandPassword } from '@/utils/auth';
-import createUserData from '../../../api/userData';
 
 interface formDataProps {
   email: string,
@@ -37,15 +36,8 @@ export default function Register() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      registerUserEmailandPassword(formData.email, formData.password);
-      createUserData({
-        isSeller: formData.isSellerSwitch,
-      });
-      router.push('/');
-    } catch (error) {
-      console.log(error, "handleSubmit -- Something went wrong registering the user.");
-    }
+    registerUserEmailandPassword(formData.email, formData.password);
+    router.push('/');
   };
 
   return (
