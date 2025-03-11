@@ -13,3 +13,10 @@ export interface UserResponse {
   uid: string;
   isSeller: boolean;
 };
+
+// GET
+export interface UserData {
+  id: number;
+  uid: string;
+  isSeller: boolean;
+};

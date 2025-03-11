@@ -1,5 +1,9 @@
 import { clientCredentials } from "@/utils/client";
-import { UserPayload, UserResponse } from "@/types/api";
+import { 
+  UserPayload, 
+  UserResponse,
+  UserData
+} from "@/types/api";
 
 const endpoint = clientCredentials.databaseURL;
 
@@ -27,4 +31,23 @@ const createUserData = async (payload: UserPayload): Promise<UserResponse> => {
   }
 };
 
-export default createUserData;
+const getSingleUserData = async (id: number): Promise<UserData> => {
+  try {
+    const response = await fetch(`${endpoint}/user/${id}`, {
+      method: 'GET',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error code: ${response.status}`);
+    }
+    // const data: UserData = await response.json();
+    // return data;
+    return await response.json() as UserData;
+    
+  } catch (error) {
+    console.error('Something went wrong retrieving the user data.', error)
+    throw error;
+  }
+};
+
+export { createUserData, getSingleUserData };
