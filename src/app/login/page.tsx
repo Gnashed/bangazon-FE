@@ -4,14 +4,14 @@ import { useState} from 'react';
 import { useRouter } from 'next/navigation';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { registerUserEmailandPassword } from '@/utils/auth';
+import { loginUserEmailAndPasswordCombo } from '@/utils/auth';
 
 interface formDataProps {
   email: string,
   password: string,
 };
 
-export default function Register() {
+export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState<formDataProps>({
     email: '',
@@ -34,16 +34,16 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      registerUserEmailandPassword(formData.email, formData.password);
+      loginUserEmailAndPasswordCombo(formData.email, formData.password);
       router.push('/');
     } catch (error) {
-      console.log(error, "handleSubmit -- Something went wrong registering the user.");
+      console.log(error, "handleSubmit -- Something went wrong logging in the user.");
     }
   };
 
   return (
     <div className="text-center d-flex flex-column justify-content-center align-content-center">
-      <h1>To register, enter an email and password</h1>
+      <h1>Login with your email and password</h1>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mt-2" controlId="email">
@@ -68,12 +68,11 @@ export default function Register() {
             value={formData.password}
             onChange={handleChange}
             required
-            >
-            
+          >
           </Form.Control>
         </Form.Group>
 
-      <Button className="mt-2" type="submit">Register</Button>
+      <Button className="mt-2" type="submit">Sign in</Button>
       </Form>
     </div>
   );
