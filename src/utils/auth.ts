@@ -15,6 +15,7 @@ const registerUserEmailandPassword = async (email:string, password: string) => {
     // The return value we get back from Firebase is a promise, so we can use await.
     const userCredential = await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
     console.log(userCredential.user);
+    return userCredential.user;
   } catch (error) {
     console.log(error);
   }
