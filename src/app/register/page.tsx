@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { registerUserEmailandPassword } from '@/utils/auth';
-import createUserData from '../../api/userData';
+import { createUserData } from '@/api/userData';
 
 interface formDataProps {
   email: string,

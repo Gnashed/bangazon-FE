@@ -20,3 +20,9 @@ export interface UserData {
   uid: string;
   isSeller: boolean;
 };
+
+export interface UserDataByUid {
+  id: number;
+  uid: string;
+  isSeller: boolean;
+}

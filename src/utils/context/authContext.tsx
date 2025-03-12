@@ -8,7 +8,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 
 // Need an interface here to define the shape of the AuthContext state
 interface AuthContextType {
-  user: User | false | null;
+  user: User | null;
   userLoading: boolean;
 }
 
@@ -25,11 +25,13 @@ interface AuthProviderProps {
 }
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [ user, setUser ] = useState<User | false | null>(null);
+  const [ user, setUser ] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (fbUser) => {
-      setUser(fbUser || false);
+      setUser(fbUser);
+      setLoading(false);
     });
 
     return () => unsubscribe(); // Cleanup listener when component unmounts.
@@ -37,8 +39,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const value = useMemo(() => ({
     user,
-    userLoading: user === null,
-  }), [user]);
+    userLoading: loading,
+  }), [user, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

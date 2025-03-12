@@ -2,7 +2,8 @@ import { clientCredentials } from "@/utils/client";
 import { 
   UserPayload, 
   UserResponse,
-  UserData
+  UserData,
+  UserDataByUid,
 } from "@/types/api";
 
 const endpoint = clientCredentials.databaseURL;
@@ -40,8 +41,7 @@ const getSingleUserData = async (id: number): Promise<UserData> => {
     if (!response.ok) {
       throw new Error(`HTTP error code: ${response.status}`);
     }
-    // const data: UserData = await response.json();
-    // return data;
+
     return await response.json() as UserData;
     
   } catch (error) {
@@ -50,4 +50,22 @@ const getSingleUserData = async (id: number): Promise<UserData> => {
   }
 };
 
-export { createUserData, getSingleUserData };
+const getUserDataByUid = async (uid: string): Promise<UserDataByUid> => {
+  try {
+    const response = await fetch(`${endpoint}/api/user?uid=${uid}`, {
+      method: 'GET',
+    });
+  
+    if (!response.ok) {
+      throw new Error(`HTTP error code: ${response.status}`);
+    }
+
+    return await response.json() as UserDataByUid;
+
+  } catch (error) {
+    console.error('Something went wrong retrieving the user\'s data by uid.', error);
+    throw error;
+  }
+};
+
+export { createUserData, getSingleUserData, getUserDataByUid };
