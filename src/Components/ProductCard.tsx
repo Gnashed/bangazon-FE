@@ -3,24 +3,24 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 interface ProductCardProps {
-  title: string;
+  name: string;
   price: number;
-  seller: string;
-  url: string;
+  sellerUsername: string;
+  imageUrl: string;
 };
 
-function ProductCard({ title, price, seller, url }: ProductCardProps) {
+function ProductCard({ name, price, sellerUsername, imageUrl }: ProductCardProps) {
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={`${url}`} />
+      <Card.Img variant="top" src={`${imageUrl}`} />
       <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Card.Text>Price: {price.toFixed(2)}</Card.Text>
-        <Card.Text>From {seller}</Card.Text>
+        <Card.Title>{name}</Card.Title>
+        <Card.Text>Price: ${price.toFixed(2)}</Card.Text>
+        <Card.Text>From {sellerUsername}</Card.Text>
         <Button variant="primary">View</Button>
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default ProductCard;
