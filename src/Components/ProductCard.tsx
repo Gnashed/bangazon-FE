@@ -1,23 +1,25 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Link from 'next/link';
 
 interface ProductCardProps {
+  id: number;
   name: string;
   price: number;
   sellerUsername: string;
   imageUrl: string;
 };
 
-function ProductCard({ name, price, sellerUsername, imageUrl }: ProductCardProps) {
+function ProductCard({ id, name, price, sellerUsername, imageUrl }: ProductCardProps) {
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src={`${imageUrl}`} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>Price: ${price.toFixed(2)}</Card.Text>
-        <Card.Text>From {sellerUsername}</Card.Text>
-        <Button variant="primary">View</Button>
+        <Link href={`/seller/${id}`} passHref>From {sellerUsername}</Link>
+        <hr />
+        <Link href={`/product/${id}`} passHref>View</Link>
       </Card.Body>
     </Card>
   );
