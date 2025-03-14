@@ -62,8 +62,7 @@ interface ProductData {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface AllProductsData extends ProductData {};
-
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface LatestProductsData extends ProductData {
-
-};
+export interface LatestProductsData extends ProductData {};
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SingleProductData extends ProductData {};
