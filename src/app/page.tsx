@@ -5,7 +5,7 @@ import { useAuth } from '@/utils/context/authContext';
 import ProductCard from '@/Components/ProductCard';
 import { getUserDataByUid } from '@/api/userData';
 import { AllProductsData } from '@/types/api';
-import { getAllProducts } from '@/api/productData';
+import { getLatestProducts } from '@/api/productData';
 
 interface UserDataProps {
   id: number;
@@ -22,7 +22,7 @@ export default function Home() {
   useEffect(() => {
     // console.log(user!.uid);
     getUserDataByUid(user!.uid).then(setUserData);
-    getAllProducts().then(setProducts);
+    getLatestProducts().then(setProducts);
   }, [user]);
 
   return (

@@ -3,7 +3,7 @@ import { AllProductsData } from "@/types/api";
 
 const endpoint = clientCredentials.databaseURL;
 
-export const getAllProducts = async (): Promise<AllProductsData[]> => {
+export const getLatestProducts = async (): Promise<AllProductsData[]> => {
   try {
     const response = await fetch(`${endpoint}/api/products/latest`, {
       method: 'GET',
