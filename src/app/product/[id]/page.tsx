@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getSingleProduct } from '@/api/productData';
 import { SingleProductData } from '@/types/api';
 import Button from 'react-bootstrap/Button';
+import Loading from '@/Components/Loading';
 
 interface ParamsProp {
   params: {
@@ -19,10 +20,10 @@ export default function ViewProductInfo({ params }: ParamsProp) {
     getSingleProduct(id).then(setProduct);
   }, [id]);
 
-  if (!product) return <p>Loading...</p>;
+  if (!product) return <Loading />;
 
   return (
-    <>
+    <div className="d-flex flex-column align-items-center">
       <h1>Product Info</h1>
       <h4>{product?.name}</h4>
       <img src={product?.imageUrl} alt={`${product.name}`} width={350} height={350} />
@@ -39,6 +40,6 @@ export default function ViewProductInfo({ params }: ParamsProp) {
         {/* TODO: add field for quantity */}
         <Button variant="primary">Add to cart</Button>
       </div>
-    </>
+    </div>
   );
-}
+};
