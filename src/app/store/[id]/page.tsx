@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getSingleStoreById } from '@/api/storeData';
 import Image from 'next/image';
 import { StoreData } from '@/types/api';
+import ProductCard from '@/Components/ProductCard';
 
 interface ParamsProp {
   params: {
@@ -43,9 +44,18 @@ export default function ViewStore({ params }: ParamsProp) {
         </div> */}
 
         {store?.products.map((product) => (
-          <div key={product?.id}>
+          <div key={product.id}>
             {/* <h4>{product?.category} ({product?.quantityAvailable})</h4> */}
-            <h4>{product?.name}</h4>
+            {<h4>{store.name}</h4>}
+            <ProductCard 
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              sellerUsername={store.seller.username}
+              imageUrl={product.imageUrl}
+              storeId={product.storeId}
+            />
           </div>
         ))}
       </div>
