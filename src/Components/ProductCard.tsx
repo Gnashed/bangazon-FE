@@ -8,16 +8,17 @@ interface ProductCardProps {
   price: number;
   sellerUsername: string;
   imageUrl: string;
+  storeId: number;
 };
 
-function ProductCard({ id, name, price, sellerUsername, imageUrl }: ProductCardProps) {
+function ProductCard({ id, name, price, sellerUsername, imageUrl, storeId }: ProductCardProps) {
   return (
-    <Card style={{ width: '19rem', height: '29rem' }}>
+    <Card style={{ width: '19rem', height: '40rem' }}>
       <Card.Img variant="top" src={`${imageUrl}`} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>Price: ${price.toFixed(2)}</Card.Text>
-        <Link href={`/seller/${id}`} passHref>From {sellerUsername}</Link>
+        <Link href={`/store/${storeId}`} passHref>From {sellerUsername}</Link>
         <hr />
         <Link href={`/product/${id}`} passHref>View</Link>
       </Card.Body>
