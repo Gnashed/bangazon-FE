@@ -53,7 +53,7 @@ interface ProductData {
   name: string;
   description: string;
   price: number;
-  quanityAvailable: number;
+  quantityAvailable: number;
   storeId: number;
   imageUrl: string;
   dateCompleted: string;

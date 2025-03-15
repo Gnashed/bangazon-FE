@@ -5,6 +5,7 @@ import { getSingleProduct } from '@/api/productData';
 import { SingleProductData } from '@/types/api';
 import Button from 'react-bootstrap/Button';
 import Loading from '@/Components/Loading';
+import Image from 'next/image';
 
 interface ParamsProp {
   params: {
@@ -26,7 +27,13 @@ export default function ViewProductInfo({ params }: ParamsProp) {
     <div className="d-flex flex-column align-items-center">
       <h1>Product Info</h1>
       <h4>{product?.name}</h4>
-      <img src={product?.imageUrl} alt={`${product.name}`} width={350} height={350} />
+      {/* <img src={product?.imageUrl} alt={`${product.name}`} width={350} height={350} /> */}
+      <Image
+        src={product.imageUrl}
+        alt={`Image of ${product.name}`}
+        width={350}
+        height={350}
+      />
       <div>
         <h6>{product?.category}</h6>
         <p>From {product?.store?.seller?.username}</p>
@@ -34,10 +41,9 @@ export default function ViewProductInfo({ params }: ParamsProp) {
       </div>
       <div>
         <p>${product?.price}</p>
-        {/* TODO: Make stock status render dynamic based on a bool */}
-        <p>In stock</p>
-        <p>Quantity:</p>
+        <p>{product.quantityAvailable > 0 ? 'In stock': 'Sold out'}</p>
         {/* TODO: add field for quantity */}
+        <p>Quantity:</p>
         <Button variant="primary">Add to cart</Button>
       </div>
     </div>

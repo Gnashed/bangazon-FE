@@ -34,11 +34,13 @@ export default function Home() {
         Welcome, { user?.displayName || 'Guest' }!
       </h2>
 
-      {products.map((product) => (
-        <div key={product.id} className="d-flex flex-row flex-wrap justify-content-center m-3">
-          <ProductCard id={product.id} name={product.name} price={product.price} sellerUsername={product?.store?.seller?.username} imageUrl={product.imageUrl} />
-        </div>
-      ))}
+      <div className="d-flex flex-wrap justify-content-center">
+        {products.map((product) => (
+          <div key={product.id} className="m-3">
+            <ProductCard id={product.id} name={product.name} price={product.price} sellerUsername={product?.store?.seller?.username} imageUrl={product.imageUrl} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
