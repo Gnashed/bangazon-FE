@@ -30,7 +30,6 @@ export interface UserDataByUid extends UserData {}
 
  interface Seller {
   id: number;
-  storeId: number;
   username: string;
   userId: number;
  };
@@ -40,6 +39,7 @@ interface Store {
   name: string;
   sellerId: number;
   seller: Seller;
+  storeImageUrl: string;
 };
 
 interface ProductData {

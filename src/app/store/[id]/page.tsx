@@ -28,11 +28,19 @@ export default function ViewStore({ params }: ParamsProp) {
         alt={`Image of store`}
         width={800}
         height={350}
+        priority={true}
       />
 
       <div>
         <h2>Categories</h2>
-        
+        <div>
+          <h4>Cat. Name (QTY)</h4>
+          <ul>
+            <li>Item</li>
+            <li>Item</li>
+            <li>Item</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
