@@ -8,10 +8,8 @@ export interface UserPayload {
   isSeller: boolean;
 };
 
-export interface UserResponse {
+export interface UserResponse extends UserPayload {
   id: number;
-  uid: string;
-  isSeller: boolean;
 };
 
 // GET
@@ -21,14 +19,11 @@ export interface UserData {
   isSeller: boolean;
 };
 
-export interface UserDataByUid {
-  id: number;
-  uid: string;
-  isSeller: boolean;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface UserDataByUid extends UserData {}
 
 /**
- *=============================  Products  =============================
+ *=============================  Product  =============================
  */
 
  // GET
@@ -58,7 +53,7 @@ interface ProductData {
   imageUrl: string;
   dateCompleted: string;
   store: Store;
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface AllProductsData extends ProductData {};
@@ -66,3 +61,17 @@ export interface AllProductsData extends ProductData {};
 export interface LatestProductsData extends ProductData {};
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SingleProductData extends ProductData {};
+
+/**
+ *=============================  Store  =============================
+ */
+
+export interface StoreData extends Store {
+  storeImageUrl: string;
+};
+
+/**
+ *=============================  Seller  =============================
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SellerData extends Seller {};
