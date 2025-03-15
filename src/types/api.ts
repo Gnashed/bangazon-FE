@@ -68,6 +68,7 @@ export interface SingleProductData extends ProductData {};
 
 export interface StoreData extends Store {
   storeImageUrl: string;
+  products: ProductData[];
 };
 
 /**

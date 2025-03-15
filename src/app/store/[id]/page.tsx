@@ -32,7 +32,7 @@ export default function ViewStore({ params }: ParamsProp) {
       />
 
       <div>
-        <h2>Categories</h2>
+        {/* <h2>Categories</h2>
         <div>
           <h4>Cat. Name (QTY)</h4>
           <ul>
@@ -40,7 +40,14 @@ export default function ViewStore({ params }: ParamsProp) {
             <li>Item</li>
             <li>Item</li>
           </ul>
-        </div>
+        </div> */}
+
+        {store?.products.map((product) => (
+          <div key={product?.id}>
+            {/* <h4>{product?.category} ({product?.quantityAvailable})</h4> */}
+            <h4>{product?.name}</h4>
+          </div>
+        ))}
       </div>
     </div>
   );
