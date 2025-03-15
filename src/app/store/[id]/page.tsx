@@ -42,22 +42,23 @@ export default function ViewStore({ params }: ParamsProp) {
             <li>Item</li>
           </ul>
         </div> */}
-
-        {store?.products.map((product) => (
-          <div key={product.id}>
-            {/* <h4>{product?.category} ({product?.quantityAvailable})</h4> */}
-            {<h4>{store.name}</h4>}
-            <ProductCard 
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              sellerUsername={store.seller.username}
-              imageUrl={product.imageUrl}
-              storeId={product.storeId}
-            />
-          </div>
-        ))}
+        <div className="d-flex flex-wrap my-5">
+          {store?.products.map((product) => (
+            <div key={product.id} className="m-3">
+              {/* <h4>{product?.category} ({product?.quantityAvailable})</h4> */}
+              {<h4>{store.name}</h4>}
+              <ProductCard 
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                sellerUsername={store.seller.username}
+                imageUrl={product.imageUrl}
+                storeId={product.storeId}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
