@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getSingleStoreById } from '@/api/storeData';
 import Image from 'next/image';
 import { StoreData } from '@/types/api';
+import ProductCard from '@/Components/ProductCard';
 
 interface ParamsProp {
   params: {
@@ -32,7 +33,7 @@ export default function ViewStore({ params }: ParamsProp) {
       />
 
       <div>
-        <h2>Categories</h2>
+        {/* <h2>Categories</h2>
         <div>
           <h4>Cat. Name (QTY)</h4>
           <ul>
@@ -40,6 +41,23 @@ export default function ViewStore({ params }: ParamsProp) {
             <li>Item</li>
             <li>Item</li>
           </ul>
+        </div> */}
+        <div className="d-flex flex-wrap my-5">
+          {store?.products.map((product) => (
+            <div key={product.id} className="m-3">
+              {/* <h4>{product?.category} ({product?.quantityAvailable})</h4> */}
+              {<h4>{store.name}</h4>}
+              <ProductCard 
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                sellerUsername={store.seller.username}
+                imageUrl={product.imageUrl}
+                storeId={product.storeId}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>
