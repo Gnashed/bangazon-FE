@@ -2,8 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
+import { useAuth } from '@/utils/context/authContext';
 
 export default function NavBar() {
+  const { user } = useAuth();
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" id="navbar">
       <Container>
@@ -26,7 +29,7 @@ export default function NavBar() {
             <Link className="nav-link mx-4" href="/">
               Profile
             </Link>
-            <Link className="nav-link mx-4" href="/orders">
+            <Link className="nav-link mx-4" href={`/orders?customerId=${user?.uid}`}>
               Orders
             </Link>
             <Button variant="danger" onClick={signOut}>

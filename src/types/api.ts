@@ -23,6 +23,27 @@ export interface UserData {
 export interface UserDataByUid extends UserData {}
 
 /**
+ *=============================  Customer  =============================
+ */
+
+ interface Customer {
+  id: number;
+  firstName: string;
+  lastName: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: number;
+  userId: number;
+  uid: string;
+}
+
+export interface CustomerData extends Customer {
+  orders: OrderData[];
+  // paymentMethods: PaymentMethods[];
+}
+
+/**
  *=============================  Product  =============================
  */
 
@@ -76,3 +97,24 @@ export interface StoreData extends Store {
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SellerData extends Seller {};
+
+/**
+ *=============================  Order and OrderItems  =============================
+ */
+export interface OrderData {
+  id: number;
+  isCompleted: boolean;
+  orderTotal: number;
+  orderDate: string;
+  customerId: number;
+  customer: Customer;
+  paymentMethodId: number;
+  // paymentMethod: Payment;
+};
+
+export interface OrderItemsData {
+  orderId: number;
+  // order: OrderData
+  productId: number;
+  product: ProductData
+}
