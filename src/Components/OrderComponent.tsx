@@ -11,7 +11,7 @@ interface OrderComponentProps {
 
 export default function OrderComponent({ id, imageUrl, orderStatus, estimatedDeliveryDate }: OrderComponentProps) {
   return (
-    <div className="d-flex">
+    <div className="d-flex align-items-center justify-content-center border border-dark rounded-end w-75">
       <Image
         src={`/${imageUrl}`}
         alt="Image of order item"

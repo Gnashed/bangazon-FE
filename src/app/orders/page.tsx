@@ -15,8 +15,8 @@ export default function OrderHistoryPage() {
   }, [user]);
 
   return (
-    <div className="d-flex flex-column text-center my-5">
-      <h1>Order History</h1>
+    <div className="d-flex flex-column text-center align-items-center my-5">
+      <h1 className="mb-5">Order History</h1>
       {customer?.orders.map((order) => (
         <OrderComponent
           key={order.id}
