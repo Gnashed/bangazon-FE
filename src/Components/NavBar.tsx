@@ -29,7 +29,7 @@ export default function NavBar() {
             <Link className="nav-link mx-4" href="/">
               Profile
             </Link>
-            <Link className="nav-link mx-4" href={`/orders?customerId=${user?.uid}`}>
+            <Link className="nav-link mx-4" href={`/order?customerId=${user?.uid}`}>
               Orders
             </Link>
             <Button variant="danger" onClick={signOut}>
