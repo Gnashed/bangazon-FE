@@ -101,6 +101,8 @@ export interface SellerData extends Seller {};
 /**
  *=============================  Order and OrderItems  =============================
  */
+type OrderStatus = 'Order Received' | 'Packing Items' | 'Shipped' | 'Delivered' | 'Returned' | 'Canceled';
+
 export interface OrderData {
   id: number;
   isCompleted: boolean;
@@ -110,11 +112,14 @@ export interface OrderData {
   customer: Customer;
   paymentMethodId: number;
   // paymentMethod: Payment;
+  estimatedDeliveryDate: string;
+  orderStatus: OrderStatus;
+  orderItems: OrderItemsData;
 };
 
 export interface OrderItemsData {
   orderId: number;
   // order: OrderData
   productId: number;
-  product: ProductData
+  product: ProductData;
 }
