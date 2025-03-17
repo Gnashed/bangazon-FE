@@ -114,7 +114,7 @@ export interface OrderData {
   // paymentMethod: Payment;
   estimatedDeliveryDate: string;
   orderStatus: OrderStatus;
-  orderItems: OrderItemsData;
+  orderItems: OrderItemsData[];
 };
 
 export interface OrderItemsData {
