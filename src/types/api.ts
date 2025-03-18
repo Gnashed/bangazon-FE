@@ -122,4 +122,6 @@ export interface OrderItemsData {
   // order: OrderData
   productId: number;
   product: ProductData;
+  itemQuantity: number;
+  store: StoreData;
 }
