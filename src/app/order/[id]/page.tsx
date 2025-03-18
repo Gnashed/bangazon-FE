@@ -8,7 +8,7 @@ interface ParamsProp {
   params: {
     id: number;
   }
-}
+};
 
 export default function OrderDetailsPage({ params }: ParamsProp) {
   const { id } = params;
@@ -21,7 +21,7 @@ export default function OrderDetailsPage({ params }: ParamsProp) {
   return (
     <div className="d-flex flex-column align-items-center my-5">
       <h1>Order Details</h1>
-
+      
     </div>
   )
 }
