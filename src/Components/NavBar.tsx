@@ -26,7 +26,7 @@ export default function NavBar() {
             <Link className="nav-link mx-4" href="/">
               Categories
             </Link>
-            <Link className="nav-link mx-4" href="/">
+            <Link className="nav-link mx-4" href="/profile">
               Profile
             </Link>
             <Link className="nav-link mx-4" href={`/order/history?uid=${user?.uid}`}>
