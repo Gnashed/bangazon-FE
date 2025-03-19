@@ -21,7 +21,8 @@ export default function OrderHistoryPage() {
         <OrderComponent
           key={order.id}
           id={order.id}
-          imageUrl={order.imageUrl}
+          // TODO: Fix image not rendering issue.
+          imageUrl={`https://google.com}`}
           orderStatus={order.orderStatus}
           estimatedDeliveryDate={order.estimatedDeliveryDate}
         />
