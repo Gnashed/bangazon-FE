@@ -7,6 +7,7 @@ import { getCustomerByUid } from '@/api/customerData';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ProfileInformation from '@/Components/forms/profile/ProfileInformation';
+import AddPaymentMethod from '@/Components/forms/payment-methods/AddPaymentMethod';
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -56,7 +57,7 @@ export default function ProfilePage() {
           </Modal.Header>
           <Modal.Body>
             {/* TODO: Render Payment Method Form Component */}
-            
+            <AddPaymentMethod />
           </Modal.Body>
           <Modal.Footer>
             {/* TODO: Add onClick handler that sends a POST request to create a payment method. */}

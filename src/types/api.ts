@@ -35,6 +35,12 @@ export interface UserDataByUid extends UserData {}
   // customer: CustomerData;
  }
 
+ export interface PaymentMethodPayload {
+  cardNumber: string;
+  securityCode: string;
+  expirationDate: string;
+ }
+
 /**
  *=============================  Customer  =============================
  */
