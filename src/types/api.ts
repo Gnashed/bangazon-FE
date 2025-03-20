@@ -23,6 +23,30 @@ export interface UserData {
 export interface UserDataByUid extends UserData {}
 
 /**
+ *=============================  Payment Method  =============================
+ */
+
+ interface PaymentMethod {
+  id: number;
+  cardNumber: string;
+  securityCode: number;
+  expirationDate: string;
+  customerId: number;
+  // customer: CustomerData;
+ }
+
+ export interface PaymentMethodPayload {
+  cardNumber: string;
+  securityCode: string;
+  expirationDate: string;
+  customerId: number;
+ }
+
+ export interface PaymentMethodResponse extends PaymentMethodPayload {
+  id: number;
+ }
+
+/**
  *=============================  Customer  =============================
  */
 
@@ -36,6 +60,7 @@ export interface UserDataByUid extends UserData {}
   zipCode: number;
   userId: number;
   uid: string;
+  paymentMethods: PaymentMethod[];
 }
 
 export interface CustomerData extends Customer {
