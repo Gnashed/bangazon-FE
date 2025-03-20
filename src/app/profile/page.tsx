@@ -5,7 +5,7 @@ import { useAuth } from '@/utils/context/authContext';
 import { CustomerData } from '@/types/api';
 import { getCustomerByUid } from '@/api/customerData';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+// import Modal from 'react-bootstrap/Modal';
 import ProfileInformation from '@/Components/forms/profile/ProfileInformation';
 import AddPaymentMethod from '@/Components/forms/payment-methods/AddPaymentMethod';
 
@@ -13,9 +13,9 @@ export default function ProfilePage() {
   const { user } = useAuth();
 
   // React Bootstrap Modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   const [customerInfo, setCustomerInfo] = useState<CustomerData | null>(null);
   useEffect(() => {
@@ -49,21 +49,8 @@ export default function ProfilePage() {
             <Button variant="link">Remove</Button>
           </div>
         ))}
-
-        <Button variant='primary' onClick={handleShow}>Add</Button>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add a payment method</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {/* TODO: Render Payment Method Form Component */}
-            <AddPaymentMethod />
-          </Modal.Body>
-          <Modal.Footer>
-            {/* TODO: Add onClick handler that sends a POST request to create a payment method. */}
-            <Button variant='secondary' onClick={handleClose}>Add payment method</Button>
-          </Modal.Footer>
-        </Modal>
+        
+        <AddPaymentMethod />
       </div>
 
       <div className="my-5">
