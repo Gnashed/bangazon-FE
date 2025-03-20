@@ -50,7 +50,7 @@ export default function ProfilePage() {
           </div>
         ))}
         
-        <AddPaymentMethod />
+        <AddPaymentMethod customerId={customerInfo?.id}/>
       </div>
 
       <div className="my-5">
