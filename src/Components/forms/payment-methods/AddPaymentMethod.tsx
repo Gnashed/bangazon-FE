@@ -10,10 +10,6 @@ interface AddPaymentMethodProps {
   expirationDate: string;
 }
 
-// interface CustomerIdProp {
-//   customerId: number;
-// }
-
 export default function AddPaymentMethod({ customerId }) {
   // React Bootstrap Modal
   const [show, setShow] = useState(false);
@@ -37,12 +33,17 @@ export default function AddPaymentMethod({ customerId }) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // The Web API expects the date string to be compliant with the ISO 8601 format. This basically appends the first day of the month so that it is in the format that C# type, DateTime, is expecting.
+    const formatingTheExpirationDate = `${formData.expirationDate}-01T00:00:00Z`;
+
     createPaymentMethod({
       cardNumber: formData.cardNumber,
       securityCode: formData.securityCode,
-      expirationDate: formData.securityCode,
+      expirationDate: formatingTheExpirationDate,
       customerId: customerId,
     });
+
+    handleClose();
   };
 
   return (
@@ -62,7 +63,7 @@ export default function AddPaymentMethod({ customerId }) {
               <Form.Label>Security code</Form.Label>
               <Form.Control name='securityCode' value={Number(formData.securityCode)} onChange={handleChange} required />
               <Form.Label>Expiration Date</Form.Label>
-              <Form.Control name='expirationDate' value={formData.expirationDate} onChange={handleChange} required />
+              <Form.Control type='month' name='expirationDate' value={formData.expirationDate} onChange={handleChange} required />
             </Form.Group>
 
             <Button variant='secondary' type='submit'>Add payment method</Button>
