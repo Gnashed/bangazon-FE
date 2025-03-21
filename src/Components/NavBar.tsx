@@ -23,7 +23,7 @@ export default function NavBar() {
             <Link className="nav-link mx-4" href="/">
               View Seller
             </Link>
-            <Link className="nav-link mx-4" href="/">
+            <Link className="nav-link mx-4" href="/product/categories">
               Categories
             </Link>
             <Link className="nav-link mx-4" href="/profile">
