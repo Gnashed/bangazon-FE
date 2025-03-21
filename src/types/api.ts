@@ -72,8 +72,6 @@ export interface CustomerData extends Customer {
  *=============================  Product  =============================
  */
 
- // GET
-
  interface Seller {
   id: number;
   username: string;
@@ -100,6 +98,18 @@ interface ProductData {
   dateCompleted: string;
   store: Store;
 };
+
+export interface ProductsForCategories {
+  id: number,
+  name: string,
+  description: string,
+}
+
+export interface ProductsInCategoriesData {
+  category: string;
+  itemsAvailable: number;
+  products: ProductsForCategories[];
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface AllProductsData extends ProductData {};

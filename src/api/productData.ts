@@ -1,5 +1,5 @@
 import { clientCredentials } from "@/utils/client";
-import { AllProductsData, SingleProductData } from "@/types/api";
+import { AllProductsData, SingleProductData, ProductsInCategoriesData } from "@/types/api";
 
 const endpoint = clientCredentials.databaseURL;
 
@@ -38,4 +38,22 @@ const getSingleProduct = async (id: number): Promise<SingleProductData> => {
   }
 };
 
-export { getLatestProducts, getSingleProduct };
+const getCategoriesWithProducts = async (): Promise<ProductsInCategoriesData[]> => {
+  try {
+    const response = await fetch(`${endpoint}/api/products/categories`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error code: ${response.status}`);
+    }
+
+    return await response.json() as ProductsInCategoriesData[];
+
+  } catch (error) {
+    console.error('There was a problem retrieving the requested categories and its related products.', error);
+    throw error;
+  }
+};
+
+export { getLatestProducts, getSingleProduct, getCategoriesWithProducts };
