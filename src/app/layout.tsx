@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ClientProvider from "@/utils/context/ClientProvider"; // Needed for ViewDirector to work.
+import { CartProvider } from "@/utils/context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ClientProvider>
-          {children}
+          <CartProvider>
+            {children}
+          </CartProvider>
         </ClientProvider>
       </body>
     </html>

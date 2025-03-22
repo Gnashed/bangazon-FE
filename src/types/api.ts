@@ -86,7 +86,7 @@ interface Store {
   storeImageUrl: string;
 };
 
-interface ProductData {
+export interface ProductData {
   id: number;
   category: string;
   name: string;
@@ -95,7 +95,7 @@ interface ProductData {
   quantityAvailable: number;
   storeId: number;
   imageUrl: string;
-  dateCompleted: string;
+  dateAdded: string;
   store: Store;
 };
 
