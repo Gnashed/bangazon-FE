@@ -32,6 +32,9 @@ export default function NavBar() {
             <Link className="nav-link mx-4" href={`/order/history?uid=${user?.uid}`}>
               Orders
             </Link>
+            <Link className='nav-link mx-4' href={`/cart`}>
+              Cart
+            </Link>
             <Button variant="danger" onClick={signOut}>
               Sign Out
             </Button>

@@ -14,7 +14,9 @@ interface UserDataProps {
 };
 
 export default function Home() {
+  // Consuming costume hooks. This makes it easier to consume context safely.
   const { user } = useAuth();
+
   const [userData, setUserData] = useState<UserDataProps | null>(null);
   // Note to self - This is how to set the state type for AllProductsData.
   const [products, setProducts] = useState<AllProductsData[]>([]);
@@ -37,7 +39,14 @@ export default function Home() {
       <div className="d-flex flex-wrap justify-content-center">
         {products.map((product) => (
           <div key={product.id} className="m-3">
-            <ProductCard id={product.id} name={product.name} price={product.price} sellerUsername={product?.store?.seller?.username} imageUrl={product.imageUrl} storeId={product.storeId} />
+            <ProductCard 
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              sellerUsername={product?.store?.seller?.username}
+              imageUrl={product.imageUrl}
+              storeId={product.storeId}
+            />
           </div>
         ))}
       </div>

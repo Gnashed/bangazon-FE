@@ -6,6 +6,7 @@ import { SingleProductData } from '@/types/api';
 import Button from 'react-bootstrap/Button';
 import Loading from '@/Components/Loading';
 import Image from 'next/image';
+import { useAddToCart } from '@/utils/context/CartContext';
 
 interface ParamsProp {
   params: {
@@ -14,6 +15,8 @@ interface ParamsProp {
 };
 
 export default function ViewProductInfo({ params }: ParamsProp) {
+  const addToCart = useAddToCart(); // Get the function
+
   const { id } = params;
   const [product, setProduct] = useState<SingleProductData | null>(null);
 
@@ -22,6 +25,10 @@ export default function ViewProductInfo({ params }: ParamsProp) {
   }, [id]);
 
   if (!product) return <Loading />;
+
+  const handleClick = () => {
+    addToCart(product);
+  }
 
   return (
     <div className="d-flex flex-column align-items-center">
@@ -43,7 +50,9 @@ export default function ViewProductInfo({ params }: ParamsProp) {
         <p>{product.quantityAvailable > 0 ? 'In stock': 'Sold out'}</p>
         {/* TODO: add field for quantity */}
         <p>Quantity:</p>
-        <Button variant="primary">Add to cart</Button>
+        <Button
+        variant="primary" 
+        onClick={handleClick}>Add to cart</Button>
       </div>
     </div>
   );

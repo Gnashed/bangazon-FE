@@ -12,8 +12,9 @@ interface ProductCardProps {
 };
 
 function ProductCard({ id, name, price, sellerUsername, imageUrl, storeId }: ProductCardProps) {
+
   return (
-    <Card style={{ width: '19rem', height: '40rem' }}>
+    <Card style={{ width: '13rem', height: '37rem' }}>
       <Card.Img variant="top" src={`${imageUrl}`} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>

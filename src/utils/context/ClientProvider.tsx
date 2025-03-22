@@ -17,6 +17,7 @@
 // and ensuring that client-side logic is executed only where necessary.
 
 import { AuthProvider } from '@/utils/context/authContext'; // AuthProvider handles authentication state and must run on the client.
+import { ThemeProvider } from './ThemeContext';
 import ViewDirectorBasedOnUserAuthStatus from '@/utils/context/ViewDirector'; // ViewDirector manages what the user sees based on their authentication status.
 import { ReactNode } from 'react';
 
@@ -28,7 +29,11 @@ function ClientProvider({ children }: ClientProviderProps) {
   return (
     <AuthProvider>
       {/* ViewDirectorBasedOnUserAuthStatus determines the view based on the user's authentication state */}
-      <ViewDirectorBasedOnUserAuthStatus>{children}</ViewDirectorBasedOnUserAuthStatus>
+      <ViewDirectorBasedOnUserAuthStatus>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </ViewDirectorBasedOnUserAuthStatus>
     </AuthProvider>
   );
 }

@@ -42,7 +42,7 @@ export default function ViewStore({ params }: ParamsProp) {
             <li>Item</li>
           </ul>
         </div> */}
-        <div className="d-flex flex-wrap my-5">
+        <div className="d-flex justify-content-center flex-wrap my-5">
           {store?.products.map((product) => (
             <div key={product.id} className="m-3">
               {/* <h4>{product?.category} ({product?.quantityAvailable})</h4> */}
