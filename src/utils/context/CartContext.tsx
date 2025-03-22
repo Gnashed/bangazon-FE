@@ -45,7 +45,7 @@ function cartReducer(cartItems: CartItem[], action: CartAction) {
       ];
     }
     case 'deleted': {
-
+      return cartItems.filter((item) => item.id !== action.id)
     }
     case 'updated': {
 
@@ -80,12 +80,28 @@ export function useAddToCart() {
     throw new Error('useAddToCart must be used within a CartProvider.');
   }
 
+  // Return the function that dispatches the action.
   return (item: ProductData) => {
     dispatch({
       type: 'added',
       id: nextId++,
       itemQuantity: 1,
       product: item,
+    });
+  };
+};
+
+export function useRemoveFromCart() {
+  const dispatch = useContext(CartDispatchContext);
+  if (!dispatch) {
+    throw new Error('useRemoveFromCart must be used within a CartProvider.');
+  }
+
+  // Return the function that dispatches the action.
+  return (id: number) => {
+    dispatch({
+      type: 'deleted',
+      id: id,
     });
   };
 };
