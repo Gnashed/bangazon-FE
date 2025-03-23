@@ -22,7 +22,7 @@ export interface CartItem {
   id: number,
   itemQuantity: number;
   product: ProductData;
-};
+}; 
 
 type CartAction =
   | { type: 'added'; id: number; itemQuantity: number; product: ProductData }
@@ -36,13 +36,16 @@ const initialCart: CartItem[] = [];
 function cartReducer(cartItems: CartItem[], action: CartAction) {
   switch (action.type) {
     case 'added': {
-      return [
+      const newItem = [
         ...cartItems, {
         id: action.id,
         itemQuantity: action.itemQuantity,
         product: action.product,
-        },
-      ];
+      }];
+      
+      const newItemStringified = JSON.stringify(newItem);
+      localStorage.setItem("cartItems", newItemStringified);
+      return newItem;
     }
     case 'deleted': {
       return cartItems.filter((item) => item.id !== action.id)
@@ -54,7 +57,7 @@ function cartReducer(cartItems: CartItem[], action: CartAction) {
       throw new Error('Unknown action: ' + action.type);
     }
   }
-}
+};
 
 // Create the context and provide it a default state. Both are null as the actual values will be provided by the Cart Page component.
 export const CartContext = createContext<CartItem[]>([]);

@@ -1,29 +1,32 @@
 'use client'
 
-import { useContext } from "react";
-import { CartContext } from "@/utils/context/CartContext";
-import Loading from "@/Components/Loading";
+// import Loading from "@/Components/Loading";
 import { CartItem } from "@/utils/context/CartContext";
 import Button from 'react-bootstrap/Button';
 import { useRemoveFromCart } from "@/utils/context/CartContext";
 
 export default function CartPage() {
-  const cartItems = useContext(CartContext) as CartItem[];
+  const cartItems = localStorage.getItem('cartItems');
+  const cartItemsToJson: CartItem[] = JSON.parse(cartItems);
   const removeFromCart = useRemoveFromCart();
 
-  if (!cartItems) {
-    return <Loading />;
+  if (!cartItemsToJson) {
+    return (
+      <div className='d-flex flex-column align-items-center my-5'>
+        <h1>Cart</h1>
+        <h2 className="my-5">Uh oh! Your shopping cart is empty. Ready to add some items? 😊</h2>
+      </div>
+    )
   }
 
   return (
     <div className='d-flex flex-column align-items-center my-5'>
       <h1>Cart</h1>
-      {cartItems.length === 0 ? (<h2 className='my-5'>Uh oh! Your shopping cart is empty.
-        Ready to add some items? 😊</h2>) : 
-        (<div>
-          {cartItems.map((item) => (
+        <div>
+          {cartItemsToJson.map((item) => (
             <div className='border border-2 p-3' key={item.id}>
               <p>Id: {item.id}</p>
+              {/* TODO: User needs to add item quantity */}
               <p>Item Quantity: {item.itemQuantity}</p>
               <p>Item information:</p>
               <ul>
@@ -37,7 +40,6 @@ export default function CartPage() {
             </div>
           ))}
       </div>
-      )}
     </div>
   );
 };
