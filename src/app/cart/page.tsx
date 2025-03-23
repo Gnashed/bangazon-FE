@@ -10,7 +10,7 @@ export default function CartPage() {
   const cartItemsToJson: CartItem[] = JSON.parse(cartItems);
   const removeFromCart = useRemoveFromCart();
 
-  if (!cartItemsToJson) {
+  if (cartItemsToJson.length === 0) {
     return (
       <div className='d-flex flex-column align-items-center my-5'>
         <h1>Cart</h1>

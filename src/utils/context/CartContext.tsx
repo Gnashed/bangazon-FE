@@ -15,7 +15,7 @@
  * 
  * */
 
-import { useContext, ReactNode ,createContext, useReducer, Dispatch } from 'react';
+import { useContext, ReactNode ,createContext, useReducer, Dispatch, useEffect } from 'react';
 import { ProductData } from '@/types/api';
 
 export interface CartItem {
@@ -24,17 +24,20 @@ export interface CartItem {
   product: ProductData;
 }; 
 
+// Remember that type 'initial-cart' will initialize the cart with localStorage.
 type CartAction =
   | { type: 'added'; id: number; itemQuantity: number; product: ProductData }
   | { type: 'deleted'; id: number }
-  | { type: 'updated'; item: CartItem };
+  | { type: 'updated'; item: CartItem }
+  | { type: 'initial-cart'; items: CartItem[] };
 
-// State for initial cart
 let nextId = 1;
-const initialCart: CartItem[] = [];
 
 function cartReducer(cartItems: CartItem[], action: CartAction) {
   switch (action.type) {
+    case 'initial-cart': {
+      return action.items;
+    }
     case 'added': {
       const newItem = [
         ...cartItems, {
@@ -48,7 +51,9 @@ function cartReducer(cartItems: CartItem[], action: CartAction) {
       return newItem;
     }
     case 'deleted': {
-      return cartItems.filter((item) => item.id !== action.id)
+      const cartWithoutDeletedItem = cartItems.filter((item) => item.id !== action.id);
+      localStorage.setItem('cartItems', JSON.stringify(cartWithoutDeletedItem));
+      return cartWithoutDeletedItem;
     }
     case 'updated': {
 
@@ -65,7 +70,14 @@ export const CartDispatchContext = createContext<Dispatch<CartAction> | null>(nu
 
 export function CartProvider({ children }: { children: ReactNode }) {
   // When using useReducer, React gives us a dispatch function.
-  const [cartItems, dispatch] = useReducer(cartReducer, initialCart);
+  const [cartItems, dispatch] = useReducer(cartReducer, []);
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem('cartItems');
+    if (storedCart) {
+      dispatch({ type: 'initial-cart', items: JSON.parse(storedCart) });
+    }
+  }, []);
 
   return (
     <CartContext.Provider value={cartItems}>
