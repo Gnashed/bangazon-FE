@@ -1,16 +1,14 @@
 'use client'
 
-// import Loading from "@/Components/Loading";
-import { CartItem } from "@/utils/context/CartContext";
 import Button from 'react-bootstrap/Button';
-import { useRemoveFromCart } from "@/utils/context/CartContext";
+import { CartContext, useRemoveFromCart } from "@/utils/context/CartContext";
+import { useContext } from 'react';
 
 export default function CartPage() {
-  const cartItems = localStorage.getItem('cartItems');
-  const cartItemsToJson: CartItem[] = JSON.parse(cartItems);
+  const cartItems = useContext(CartContext);
   const removeFromCart = useRemoveFromCart();
 
-  if (cartItemsToJson.length === 0) {
+  if (cartItems.length === 0) {
     return (
       <div className='d-flex flex-column align-items-center my-5'>
         <h1>Cart</h1>
@@ -23,7 +21,7 @@ export default function CartPage() {
     <div className='d-flex flex-column align-items-center my-5'>
       <h1>Cart</h1>
         <div>
-          {cartItemsToJson.map((item) => (
+          {cartItems.map((item) => (
             <div className='border border-2 p-3' key={item.id}>
               <p>Id: {item.id}</p>
               {/* TODO: User needs to add item quantity */}
