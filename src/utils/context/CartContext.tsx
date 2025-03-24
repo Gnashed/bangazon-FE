@@ -15,37 +15,45 @@
  * 
  * */
 
-import { useContext, ReactNode ,createContext, useReducer, Dispatch } from 'react';
+import { useContext, ReactNode ,createContext, useReducer, Dispatch, useEffect } from 'react';
 import { ProductData } from '@/types/api';
 
 export interface CartItem {
   id: number,
   itemQuantity: number;
   product: ProductData;
-};
+}; 
 
+// Remember that type 'initial-cart' will initialize the cart with localStorage.
 type CartAction =
   | { type: 'added'; id: number; itemQuantity: number; product: ProductData }
   | { type: 'deleted'; id: number }
-  | { type: 'updated'; item: CartItem };
+  | { type: 'updated'; item: CartItem }
+  | { type: 'initial-cart'; items: CartItem[] };
 
-// State for initial cart
 let nextId = 1;
-const initialCart: CartItem[] = [];
 
 function cartReducer(cartItems: CartItem[], action: CartAction) {
   switch (action.type) {
+    case 'initial-cart': {
+      return action.items;
+    }
     case 'added': {
-      return [
+      const newItem = [
         ...cartItems, {
         id: action.id,
         itemQuantity: action.itemQuantity,
         product: action.product,
-        },
-      ];
+      }];
+      
+      const newItemStringified = JSON.stringify(newItem);
+      localStorage.setItem("cartItems", newItemStringified);
+      return newItem;
     }
     case 'deleted': {
-
+      const cartWithoutDeletedItem = cartItems.filter((item) => item.id !== action.id);
+      localStorage.setItem('cartItems', JSON.stringify(cartWithoutDeletedItem));
+      return cartWithoutDeletedItem;
     }
     case 'updated': {
 
@@ -54,7 +62,7 @@ function cartReducer(cartItems: CartItem[], action: CartAction) {
       throw new Error('Unknown action: ' + action.type);
     }
   }
-}
+};
 
 // Create the context and provide it a default state. Both are null as the actual values will be provided by the Cart Page component.
 export const CartContext = createContext<CartItem[]>([]);
@@ -62,7 +70,14 @@ export const CartDispatchContext = createContext<Dispatch<CartAction> | null>(nu
 
 export function CartProvider({ children }: { children: ReactNode }) {
   // When using useReducer, React gives us a dispatch function.
-  const [cartItems, dispatch] = useReducer(cartReducer, initialCart);
+  const [cartItems, dispatch] = useReducer(cartReducer, []);
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem('cartItems');
+    if (storedCart) {
+      dispatch({ type: 'initial-cart', items: JSON.parse(storedCart) });
+    }
+  }, []);
 
   return (
     <CartContext.Provider value={cartItems}>
@@ -73,19 +88,34 @@ export function CartProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Allow this to be used in other components in the component tree.
 export function useAddToCart() {
   const dispatch = useContext(CartDispatchContext);
   if (!dispatch) {
     throw new Error('useAddToCart must be used within a CartProvider.');
   }
 
+  // Return the function that dispatches the action.
   return (item: ProductData) => {
     dispatch({
       type: 'added',
       id: nextId++,
       itemQuantity: 1,
       product: item,
+    });
+  };
+};
+
+export function useRemoveFromCart() {
+  const dispatch = useContext(CartDispatchContext);
+  if (!dispatch) {
+    throw new Error('useRemoveFromCart must be used within a CartProvider.');
+  }
+
+  // Return the function that dispatches the action.
+  return (id: number) => {
+    dispatch({
+      type: 'deleted',
+      id: id,
     });
   };
 };
