@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { getSingleProduct } from '@/api/productData';
 import { SingleProductData } from '@/types/api';
 import Button from 'react-bootstrap/Button';
@@ -8,6 +8,8 @@ import Loading from '@/Components/Loading';
 import Image from 'next/image';
 import { useAddToCart } from '@/utils/context/CartContext';
 import Toast from 'react-bootstrap/Toast';
+import Form from 'react-bootstrap/Form';
+import { CartContext } from '@/utils/context/CartContext';
 
 interface ParamsProp {
   params: {
@@ -17,9 +19,11 @@ interface ParamsProp {
 
 export default function ViewProductInfo({ params }: ParamsProp) {
   const addToCart = useAddToCart(); // Get the function
+  const cartItems = useContext(CartContext);
 
   const { id } = params;
   const [product, setProduct] = useState<SingleProductData | null>(null);
+  const [quantity, setQuantity] = useState(0);
 
   // For Toast Notification
   const [show, setShow] = useState(false);
@@ -32,9 +36,14 @@ export default function ViewProductInfo({ params }: ParamsProp) {
   if (!product) return <Loading />;
 
   const handleClick = () => {
-    addToCart(product);
+    if (quantity <= 0) {
+      console.log('Invalid entry. Enter a number greater than 0.');
+      return;
+    }
+    
+    addToCart(product, quantity);
     showToast();
-  }
+  };
 
   return (
     <div className="d-flex flex-column align-items-center my-5">
@@ -55,16 +64,25 @@ export default function ViewProductInfo({ params }: ParamsProp) {
         <p>${product?.price}</p>
         <p>{product.quantityAvailable > 0 ? 'In stock': 'Sold out'}</p>
         {/* TODO: add field for quantity */}
-        <p>Quantity:</p>
-        <Button
-        variant="primary" 
-        onClick={handleClick}>Add to cart</Button>
+        <Form.Group className='d-flex'>
+          <Form.Label>Quantity:</Form.Label>
+          <Form.Select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} aria-label='select quantity' className='mx-3'>
+            <option>Select ...</option>
+            {/* .map() method can accept up to three arguments. Here, two are being used - the element in the array (_) and the index (named index). The `_` means a value that isn't needed in this operation. In this case, I don't need the value because, when initializing an array of n items (like below), the values are going to be undefined.*/}
+            {[...Array(4)].map((_, index) => (
+              <option key={index + 1} value={index + 1}>
+                {index + 1}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+        <Button variant="primary" className='my-5' onClick={handleClick}>Add to cart</Button>
         <Toast show={show} onClose={showToast}>
           <Toast.Header>
             <strong>Item added!</strong>
           </Toast.Header>
           <Toast.Body>
-            Item successfully added to the cart.
+            {quantity} {product.name} successfully added to the cart.
           </Toast.Body>
         </Toast>
       </div>
