@@ -88,7 +88,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Allow this to be used in other components in the component tree.
 export function useAddToCart() {
   const dispatch = useContext(CartDispatchContext);
   if (!dispatch) {
