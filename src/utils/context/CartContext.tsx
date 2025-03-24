@@ -24,7 +24,6 @@ export interface CartItem {
   product: ProductData;
 }; 
 
-// Remember that type 'initial-cart' will initialize the cart with localStorage.
 type CartAction =
   | { type: 'added'; id: number; itemQuantity: number; product: ProductData }
   | { type: 'deleted'; id: number }
@@ -39,16 +38,27 @@ function cartReducer(cartItems: CartItem[], action: CartAction) {
       return action.items;
     }
     case 'added': {
-      const newItem = [
-        ...cartItems, {
-        id: action.id,
-        itemQuantity: action.itemQuantity,
-        product: action.product,
-      }];
-      
-      const newItemStringified = JSON.stringify(newItem);
-      localStorage.setItem("cartItems", newItemStringified);
-      return newItem;
+      // Locate an existing product. Remember that .findIndex() returns -1 where the predicate is false.
+      const existingItemIndex = cartItems.findIndex((item) => item.product.id === action.product.id);
+
+      let updatedCart;
+
+      if (existingItemIndex !== -1) {
+        updatedCart = cartItems.map((item, index) =>
+          index === existingItemIndex ? { ...item, itemQuantity: item.itemQuantity + action.itemQuantity } : item);
+      } else {
+        updatedCart = [
+          ...cartItems, {
+            id: nextId++,
+            itemQuantity: action.itemQuantity,
+            product: action.product,
+          }
+        ];
+      }
+
+      const updatedCartStringified = JSON.stringify(updatedCart);
+      localStorage.setItem("cartItems", updatedCartStringified);
+      return updatedCart;
     }
     case 'deleted': {
       const cartWithoutDeletedItem = cartItems.filter((item) => item.id !== action.id);
@@ -95,11 +105,11 @@ export function useAddToCart() {
   }
 
   // Return the function that dispatches the action.
-  return (item: ProductData) => {
+  return (item: ProductData, qty: number) => {
     dispatch({
       type: 'added',
       id: nextId++,
-      itemQuantity: 1,
+      itemQuantity: qty,
       product: item,
     });
   };
