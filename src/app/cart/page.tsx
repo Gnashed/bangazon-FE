@@ -1,13 +1,15 @@
 'use client'
 
 import Button from 'react-bootstrap/Button';
-import { CartContext, useRemoveFromCart } from "@/utils/context/CartContext";
+import { CartContext, useRemoveFromCart, useClearCart } from "@/utils/context/CartContext";
 import { useContext } from 'react';
 import Image from 'next/image';
 
 export default function CartPage() {
   const cartItems = useContext(CartContext);
   const removeFromCart = useRemoveFromCart();
+  const clearCart = useClearCart();
+
   let cartSubtotal = 0;
 
   cartItems.forEach((item) => {
@@ -53,7 +55,9 @@ export default function CartPage() {
           ))}
       </div>
 
-      <div className='d-flex'>
+      <Button variant='link' onClick={() => clearCart()}>Clear cart</Button>
+
+      <div className='d-flex my-5'>
         <h4>Subtotal: ${cartSubtotal}</h4>
         <Button variant='outline-dark' className='mx-5'>Checkout</Button>
       </div>

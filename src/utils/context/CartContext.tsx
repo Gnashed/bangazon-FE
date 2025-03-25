@@ -27,6 +27,7 @@ export interface CartItem {
 type CartAction =
   | { type: 'added'; id: number; itemQuantity: number; product: ProductData }
   | { type: 'deleted'; id: number }
+  | { type: 'clear-cart' }
   | { type: 'updated'; item: CartItem }
   | { type: 'initial-cart'; items: CartItem[] };
 
@@ -64,6 +65,10 @@ function cartReducer(cartItems: CartItem[], action: CartAction) {
       const cartWithoutDeletedItem = cartItems.filter((item) => item.id !== action.id);
       localStorage.setItem('cartItems', JSON.stringify(cartWithoutDeletedItem));
       return cartWithoutDeletedItem;
+    }
+    case 'clear-cart': {
+      localStorage.setItem("cartItems", JSON.stringify([]));
+      return [];
     }
     case 'updated': {
 
@@ -128,4 +133,13 @@ export function useRemoveFromCart() {
       id: id,
     });
   };
+};
+
+export function useClearCart() {
+  const dispatch = useContext(CartDispatchContext);
+  if (!dispatch) {
+    throw new Error('useRemoveFromCart must be used within a CartProvider.');
+  }
+  // Return the function that dispatches the action.
+  return () => dispatch({ type: 'clear-cart' });
 };
