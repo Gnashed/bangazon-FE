@@ -47,44 +47,57 @@ export default function ViewProductInfo({ params }: ParamsProp) {
 
   return (
     <div className="d-flex flex-column align-items-center my-5">
-      <h1>Product Info</h1>
-      <h4>{product?.name}</h4>
-      <Image
-        src={`${product.imageUrl}`}
-        alt={`Image of ${product.name}`}
-        width={350}
-        height={350}
-      />
-      <div>
-        <h6>{product?.category}</h6>
-        <p>From {product?.store?.seller?.username}</p>
-        <p>{product?.description}</p>
-      </div>
-      <div>
-        <p>${product?.price}</p>
-        <p>{product.quantityAvailable > 0 ? 'In stock': 'Sold out'}</p>
-        {/* TODO: add field for quantity */}
-        <Form.Group className='d-flex'>
-          <Form.Label>Quantity:</Form.Label>
-          <Form.Select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} aria-label='select quantity' className='mx-3'>
-            <option>Select ...</option>
-            {/* .map() method can accept up to three arguments. Here, two are being used - the element in the array (_) and the index (named index). The `_` means a value that isn't needed in this operation. In this case, I don't need the value because, when initializing an array of n items (like below), the values are going to be undefined.*/}
-            {[...Array(4)].map((_, index) => (
-              <option key={index + 1} value={index + 1}>
-                {index + 1}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-        <Button variant="primary" className='my-5' onClick={handleClick}>Add to cart</Button>
-        <Toast show={show} onClose={showToast}>
-          <Toast.Header>
-            <strong>Item added!</strong>
-          </Toast.Header>
-          <Toast.Body>
-            {quantity} {product.name} successfully added to the cart.
-          </Toast.Body>
-        </Toast>
+      <h1 className='mb-5'>Product Info</h1>
+
+      <div className='d-flex my-5'>
+
+        {/* Left side */}
+        <div className='mx-5'>
+          <h4>{product?.name}</h4>
+          <Image
+            src={`${product.imageUrl}`}
+            alt={`Image of ${product.name}`}
+            width={350}
+            height={350}
+          />
+        </div>
+
+        {/* Right side */}
+        <div className='mx-5'>
+          <div className='d-flex align-items-baseline'>
+            <h6 className='mx-2'>{product?.category}</h6>
+            <p className='mx-2'>From {product?.store?.seller?.username}</p>
+          </div>
+          <p>{product?.description}</p>
+        
+
+          <div className='m-5'>
+            <p>${product?.price}</p>
+            <p>{product.quantityAvailable > 0 ? 'In stock': 'Sold out'}</p>
+            {/* TODO: add field for quantity */}
+            <Form.Group className='d-flex'>
+              <Form.Label>Quantity:</Form.Label>
+              <Form.Select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} aria-label='select quantity' className='mx-3'>
+                <option>Select ...</option>
+                {/* .map() method can accept up to three arguments. Here, two are being used - the element in the array (_) and the index (named index). The `_` means a value that isn't needed in this operation. In this case, I don't need the value because, when initializing an array of n items (like below), the values are going to be undefined.*/}
+                {[...Array(4)].map((_, index) => (
+                  <option key={index + 1} value={index + 1}>
+                    {index + 1}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Button variant="primary" className='my-5' onClick={handleClick}>Add to cart</Button>
+            <Toast show={show} onClose={showToast}>
+              <Toast.Header>
+                <strong>Item added!</strong>
+              </Toast.Header>
+              <Toast.Body>
+                {quantity} {product.name} successfully added to the cart.
+              </Toast.Body>
+            </Toast>
+          </div>
+        </div>
       </div>
     </div>
   );
