@@ -47,7 +47,7 @@ export default function CartPage() {
               />
               <h6 className='mx-3'>{item.product.name}</h6>
               <h6 className='mx-3'>${item.product.price}</h6>
-              {/* TODO: User needs to add item quantity */}
+
               <p>Item Quantity: {item.itemQuantity}</p>
               
               <Button variant='link' onClick={() => removeFromCart(item.id)} className='mx-3'>Remove</Button>
