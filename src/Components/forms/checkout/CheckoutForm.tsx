@@ -76,7 +76,7 @@ export default function CheckoutForm() {
           </Form.FloatingLabel>
         </Form.Group>
 
-        <h2 className='text-center mt-5'>Payment</h2>
+        <h2 className='text-center mt-5'>Payment Method</h2>
 
         <Form.Group className='my-3'>
           <Form.Select aria-label='Select input field' name='paymentMethod'>

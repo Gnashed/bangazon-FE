@@ -11,7 +11,7 @@ interface OrderItemProp {
 
 function OrderItem({ id, name, imageUrl, price, itemQuantity }: OrderItemProp) {
   return (
-    <div key={id} className="d-flex">
+    <div key={id} className="d-flex justify-content-center border border-1 my-3">
       <Image 
         src={`${imageUrl}`}
         alt={`Image of ${name}`}
