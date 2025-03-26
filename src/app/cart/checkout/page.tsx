@@ -19,8 +19,8 @@ export default function CheckoutPage() {
         <div className='d-flex flex-column align-items-center m-5'>
             {/* TODO: Render cart item components */}
 
-            <h4>Shipping: </h4>
-            <h4>Total: </h4>
+            <h4>Shipping: $</h4>
+            <h4>Total: $</h4>
         
         </div>
       </div>
