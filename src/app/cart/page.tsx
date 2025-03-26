@@ -4,11 +4,14 @@ import Button from 'react-bootstrap/Button';
 import { CartContext, useRemoveFromCart, useClearCart } from "@/utils/context/CartContext";
 import { useContext } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function CartPage() {
   const cartItems = useContext(CartContext);
   const removeFromCart = useRemoveFromCart();
   const clearCart = useClearCart();
+
+  const router = useRouter();
 
   let cartSubtotal = 0;
 
@@ -47,7 +50,7 @@ export default function CartPage() {
               />
               <h6 className='mx-3'>{item.product.name}</h6>
               <h6 className='mx-3'>${item.product.price}</h6>
-              {/* TODO: User needs to add item quantity */}
+
               <p>Item Quantity: {item.itemQuantity}</p>
               
               <Button variant='link' onClick={() => removeFromCart(item.id)} className='mx-3'>Remove</Button>
@@ -59,7 +62,7 @@ export default function CartPage() {
 
       <div className='d-flex my-5'>
         <h4>Subtotal: ${cartSubtotal}</h4>
-        <Button variant='outline-dark' className='mx-5'>Checkout</Button>
+        <Button variant='outline-dark' className='mx-5' onClick={() => router.push('/cart/checkout')}>Checkout</Button>
       </div>
     </div>
   );

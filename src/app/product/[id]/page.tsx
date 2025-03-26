@@ -78,7 +78,7 @@ export default function ViewProductInfo({ params }: ParamsProp) {
             <Form.Group className='d-flex'>
               <Form.Label>Quantity:</Form.Label>
               <Form.Select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} aria-label='select quantity' className='mx-3'>
-                <option>Select ...</option>
+                <option value={0}>0</option>
                 {/* .map() method can accept up to three arguments. Here, two are being used - the element in the array (_) and the index (named index). The `_` means a value that isn't needed in this operation. In this case, I don't need the value because, when initializing an array of n items (like below), the values are going to be undefined.*/}
                 {[...Array(4)].map((_, index) => (
                   <option key={index + 1} value={index + 1}>
@@ -87,7 +87,7 @@ export default function ViewProductInfo({ params }: ParamsProp) {
                 ))}
               </Form.Select>
             </Form.Group>
-            <Button variant="primary" className='my-5' onClick={handleClick}>Add to cart</Button>
+            {quantity === 0 ? (<Button disabled variant="outline-dark" className='my-5' onClick={handleClick}>Add to cart</Button>) : (<Button variant="dark" className='my-5' onClick={handleClick}>Add to cart</Button>)}
             <Toast show={show} onClose={showToast}>
               <Toast.Header>
                 <strong>Item added!</strong>

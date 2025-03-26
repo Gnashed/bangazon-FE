@@ -1,5 +1,5 @@
 import { clientCredentials } from '@/utils/client';
-import { PaymentMethodPayload, PaymentMethodResponse } from '@/types/api';
+import { PaymentMethodPayload, PaymentMethodResponse, PaymentMethodData } from '@/types/api';
 
 const endpoint = clientCredentials.databaseURL;
 
@@ -19,6 +19,22 @@ export const createPaymentMethod = async (payload: PaymentMethodPayload): Promis
     
   } catch (error) {
     console.error('There was a problem sending the POST request.', error);
+    throw error;
+  }
+};
+
+export const getCustomerPaymentMethods = async (customerId: number): Promise<PaymentMethodData[]> => {
+  try {
+    const response = await fetch(`${endpoint}/api/payment-methods?customerId=${customerId}`)
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error code: ${response.status}`);
+    }
+
+    return await response.json() as PaymentMethodData[];
+    
+  } catch (error) {
+    console.error('There was a problem sending the GET request.', error);
     throw error;
   }
 };

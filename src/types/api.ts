@@ -45,6 +45,8 @@ export interface UserDataByUid extends UserData {}
  export interface PaymentMethodResponse extends PaymentMethodPayload {
   id: number;
  }
+ // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+ export interface PaymentMethodData extends PaymentMethod {};
 
 /**
  *=============================  Customer  =============================
