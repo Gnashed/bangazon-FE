@@ -1,5 +1,5 @@
 import { clientCredentials } from "@/utils/client";
-import { OrderData, OrderPayload, OrderResponse } from "@/types/api";
+import { OrderData, OrderPayload, OrderResponse, OrderItemsData } from "@/types/api";
 
 const endpoint = clientCredentials.databaseURL;
 
@@ -54,14 +54,17 @@ export const getOrderById = async (orderId: number): Promise<OrderData> => {
   }
 };
 
-export const createOrder = async (payload: OrderPayload): Promise<OrderResponse> => {
+export const createOrder = async (payload: OrderPayload, orderItemsPayload: OrderItemsData): Promise<OrderResponse> => {
   try {
     const response = await fetch(`${endpoint}/api/order`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        payload,
+        orderItemsPayload
+      }),
     });
 
     if (!response.ok) {
