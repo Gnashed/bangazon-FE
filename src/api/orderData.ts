@@ -1,5 +1,5 @@
 import { clientCredentials } from "@/utils/client";
-import { OrderData } from "@/types/api";
+import { OrderData, OrderPayload, OrderResponse } from "@/types/api";
 
 const endpoint = clientCredentials.databaseURL;
 
@@ -53,3 +53,25 @@ export const getOrderById = async (orderId: number): Promise<OrderData> => {
     throw error;
   }
 };
+
+export const createOrder = async (payload: OrderPayload): Promise<OrderResponse> => {
+  try {
+    const response = await fetch(`${endpoint}/api/order`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error code: ${response.status}`);
+    }
+
+    return await response.json() as OrderResponse;
+
+  } catch (error) {
+    console.error('There was a problem sending a POST request order.', error);
+    throw error;
+  }
+}

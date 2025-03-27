@@ -162,3 +162,18 @@ export interface OrderItemsData {
   itemQuantity: number;
   store: StoreData;
 }
+
+export interface OrderPayload {
+  isCompleted: boolean;
+  orderTotal: number;
+  orderDate: string;
+  customerId: number;
+  paymentMethodId: number;
+  orderStatus: OrderStatus;
+  estimatedDeliveryDate: string;
+  orderItem: OrderItemsData[];
+}
+
+export interface OrderResponse extends OrderPayload {
+  id: number;
+};

@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { getCustomerPaymentMethods } from '@/api/paymentMethodData';
 import { PaymentMethodData } from '@/types/api';
+// import { createOrder } from '@/api/orderData';
 
 interface FormDataProps {
   firstName: string;
@@ -13,7 +14,7 @@ interface FormDataProps {
   city: string;
   state: string;
   zipCode: number;
-  // paymentMethod: 
+  paymentMethod: number;
 }
 
 // interface pa
@@ -26,10 +27,17 @@ export default function CheckoutForm() {
     city: '',
     state: '',
     zipCode: Number(''),
+    paymentMethod: Number('')
   });
   const [paymentMethodData, setPaymentMethodData] = useState<PaymentMethodData[] | null>(null);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // createOrder({
+      
+    // })
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -79,10 +87,10 @@ export default function CheckoutForm() {
         <h2 className='text-center mt-5'>Payment Method</h2>
 
         <Form.Group className='my-3'>
-          <Form.Select aria-label='Select input field' name='paymentMethod'>
+          <Form.Select aria-label='Select input field' name='paymentMethod' value={formData.paymentMethod}>
           <option>Select payment method</option>
             {paymentMethodData?.map((pm) => (
-              <option key={pm.id}>{pm.cardNumber}</option>
+              <option key={pm.id} value={pm.id}>{pm.cardNumber}</option>
             ))}
           </Form.Select>
         </Form.Group>
