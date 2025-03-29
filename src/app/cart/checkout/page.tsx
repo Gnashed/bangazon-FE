@@ -9,6 +9,19 @@ import { CartContext } from '@/utils/context/CartContext';
 export default function CheckoutPage() {
   const cartItems = useContext(CartContext);
 
+  const shippingCharge = 6.99;
+  let cartTotal = 0;
+
+  cartItems.forEach((item) => {
+    if (item.itemQuantity > 1) {
+      const itemPrice = item.product.price * item.itemQuantity;
+      cartTotal += itemPrice;
+    } else if (item.itemQuantity === 1) {
+      cartTotal += item.product.price;
+    }
+    return cartTotal;
+  });
+
   return (
     <div>
       <h1 className='text-center my-5'>Checkout</h1>
@@ -22,7 +35,6 @@ export default function CheckoutPage() {
         
         {/* Right side */}
         <div className='d-flex flex-column align-items-center m-5'>
-            {/* TODO: Render cart item components */}
             {cartItems.map((item) => (
               <OrderItem
                 key={item.id}
@@ -34,7 +46,7 @@ export default function CheckoutPage() {
               />
             ))}
             <h4>Shipping: $6.99</h4>
-            <h4>Total: $</h4>
+            <h4>Total: ${cartTotal + shippingCharge}</h4>
         
         </div>
       </div>
