@@ -26,7 +26,7 @@ export interface UserDataByUid extends UserData {}
  *=============================  Payment Method  =============================
  */
 
- interface PaymentMethod {
+ export interface PaymentMethod {
   id: number;
   cardNumber: string;
   securityCode: number;
