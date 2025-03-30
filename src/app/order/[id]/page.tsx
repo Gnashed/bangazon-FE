@@ -15,6 +15,11 @@ interface ParamsProp {
 export default function OrderDetailsPage({ params }: ParamsProp) {
   const { id } = params;
   const [orderData, setOrderData] = useState<OrderData | null>(null);
+  const shippingCharge = 6.99;
+  const totalItems = orderData?.orderItems.length;
+  // Example of optional chaining, or ??. Since, orderData.orderTotal can be null, setting a default value through option chaining prevents code editor/IDE warnings since a default value is used instead.
+  const flooredOrderTotal = Math.floor((orderData?.orderTotal ?? 0 + shippingCharge) * 100);
+  const finalTotal = flooredOrderTotal / 100;
 
   useEffect(() => {
     getOrderById(id).then(setOrderData);
@@ -43,6 +48,7 @@ export default function OrderDetailsPage({ params }: ParamsProp) {
 
         <div className="right-side w-35">
           <h2>Items</h2>
+          {/* FIXME: Consider typing product */}
           {orderData?.orderItems.map((item) => (
             <OrderItem 
               key={item.product.id}
@@ -54,9 +60,9 @@ export default function OrderDetailsPage({ params }: ParamsProp) {
             />
           ))}
           <div>
-            <p>Total Items: </p>
-            <p>Shipping: $</p>
-            <p>Total: $</p>
+            <p>Total Items: {totalItems}</p>
+            <p>Shipping: ${shippingCharge}</p>
+            <p>Total: $ {finalTotal}</p>
           </div>
         </div>
       </div>

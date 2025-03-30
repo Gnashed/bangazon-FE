@@ -18,7 +18,7 @@ interface FormDataProps {
   state: string;
   zipCode: number;
   paymentMethod: number;
-}
+};
 
 export default function CheckoutForm() {
   const router = useRouter();
