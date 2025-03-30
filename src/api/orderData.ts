@@ -54,7 +54,7 @@ export const getOrderById = async (orderId: number): Promise<OrderData> => {
   }
 };
 
-export const createOrder = async (payload: OrderPayload, orderItemsPayload: OrderItemsData): Promise<OrderResponse> => {
+export const createOrder = async (payload: OrderPayload, orderItemsPayload: OrderItemsData[]): Promise<OrderResponse> => {
   try {
     const response = await fetch(`${endpoint}/api/order`, {
       method: 'POST',
@@ -62,8 +62,8 @@ export const createOrder = async (payload: OrderPayload, orderItemsPayload: Orde
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        payload,
-        orderItemsPayload
+        ...payload,
+        orderItems: orderItemsPayload
       }),
     });
 

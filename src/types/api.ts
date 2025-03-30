@@ -156,11 +156,8 @@ export interface OrderData {
 
 export interface OrderItemsData {
   orderId: number;
-  // order: OrderData
   productId: number;
-  product: ProductData;
   itemQuantity: number;
-  store: StoreData;
 }
 
 export interface OrderPayload {
@@ -171,7 +168,7 @@ export interface OrderPayload {
   paymentMethodId: number;
   orderStatus: OrderStatus;
   estimatedDeliveryDate: string;
-  orderItem: OrderItemsData[];
+  orderItems: OrderItemsData[];
 }
 
 export interface OrderResponse extends OrderPayload {

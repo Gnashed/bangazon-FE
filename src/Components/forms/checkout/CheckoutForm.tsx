@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { getCustomerPaymentMethods } from '@/api/paymentMethodData';
-import { PaymentMethodData, PaymentMethod } from '@/types/api';
+import { PaymentMethodData, OrderPayload, OrderItemsData } from '@/types/api';
 import { createOrder } from '@/api/orderData';
 import { CartContext } from '@/utils/context/CartContext';
 import { useRouter } from 'next/navigation';
@@ -35,9 +35,9 @@ export default function CheckoutForm() {
     paymentMethod: Number('')
   });
 
-  const filteredCart = cartItems.filter((item) => item.product);
-
+  // const filteredCart = cartItems.filter((item) => item.product);
   let cartTotal = 0;
+  const orderItems: OrderItemsData[] = [];
 
   cartItems.forEach((item) => {
     if (item.itemQuantity > 1) {
@@ -49,30 +49,40 @@ export default function CheckoutForm() {
     return cartTotal;
   });
 
+  cartItems.forEach((item) => {
+    const obj = {
+      orderId: 0,
+      productId: item.product.id,
+      itemQuantity: item.itemQuantity
+    };
+    orderItems.push(obj);
+  });
 
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const day = String(currentDate.getDate()).padStart(2, '0');
-  const formatDate = `${year}-${month}-${day}-T00:00:00Z`;
+  const formatDate = `${year}-${month}-${day}T00:00:00Z`;
 
-  const obj = {
+  const orderObjectPayload: OrderPayload = {
     isCompleted: true,
     orderTotal: cartTotal,
     orderDate: formatDate,
     customerId: Number(formData.paymentMethod),
-    orderStatus: 'Order Receieved',
+    paymentMethodId: Number(formData.paymentMethod),
+    orderStatus: 'Order Received',
     estimatedDeliveryDate: '2025-03-30T00:00:00Z',
-  }
+    orderItems: orderItems
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // TODO: Pass in the cart items
-    // createOrder(obj, filteredCart).then(() => {
-    //   router.push('/');
-    // });
-    console.log(obj, filteredCart);
+    createOrder(orderObjectPayload, orderItems).then(() => {
+      router.push('/');
+    });
+    // console.log(orderObjectPayload, orderItems);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
