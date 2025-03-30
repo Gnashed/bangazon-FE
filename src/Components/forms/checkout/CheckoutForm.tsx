@@ -4,10 +4,12 @@ import { useState, useEffect, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { getCustomerPaymentMethods } from '@/api/paymentMethodData';
-import { PaymentMethodData, OrderPayload, OrderItemsData } from '@/types/api';
+import { PaymentMethodData, OrderPayload, OrderItemsData, CustomerData } from '@/types/api';
 import { createOrder } from '@/api/orderData';
+import { getCustomerByUid } from '@/api/customerData';
 import { CartContext } from '@/utils/context/CartContext';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/utils/context/authContext';
 import { useClearCart } from '@/utils/context/CartContext';
 
 interface FormDataProps {
@@ -22,12 +24,14 @@ interface FormDataProps {
 
 export default function CheckoutForm() {
   const router = useRouter();
+  const { user } = useAuth();
   const cartItems = useContext(CartContext);
   const clearCart = useClearCart();
 
   console.log(cartItems);
   const [paymentMethodData, setPaymentMethodData] = useState<PaymentMethodData[] | null>(null);
 
+  const [customerData, setCustomerData] = useState<CustomerData | null>(null)
   const [formData, setFormData] = useState<FormDataProps>({
     firstName: '',
     lastName: '',
@@ -114,8 +118,16 @@ export default function CheckoutForm() {
   };
 
   useEffect(() => {
-    getCustomerPaymentMethods(1).then(setPaymentMethodData);
-  }, []);
+    if (user?.uid) {
+      getCustomerByUid(user.uid).then(setCustomerData);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (customerData?.id) {
+      getCustomerPaymentMethods(customerData.id).then(setPaymentMethodData);
+    }
+  }, [customerData]);
 
   return (
     <div className='d-flex flex-column text text-center mt-5'>
