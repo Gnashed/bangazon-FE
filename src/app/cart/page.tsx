@@ -30,7 +30,7 @@ export default function CartPage() {
       <div className='d-flex flex-column align-items-center my-5'>
         <h1>Cart</h1>
         <h2 className="my-5">Uh oh! Your shopping cart is empty. Ready to add some items? 😊</h2>
-        <Button variant='outline-dark'>View products</Button>
+        <Button variant='outline-dark' onClick={() => router.push('/')}>View products</Button>
       </div>
     )
   }
