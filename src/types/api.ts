@@ -26,7 +26,7 @@ export interface UserDataByUid extends UserData {}
  *=============================  Payment Method  =============================
  */
 
- interface PaymentMethod {
+ export interface PaymentMethod {
   id: number;
   cardNumber: string;
   securityCode: number;
@@ -156,9 +156,21 @@ export interface OrderData {
 
 export interface OrderItemsData {
   orderId: number;
-  // order: OrderData
   productId: number;
-  product: ProductData;
   itemQuantity: number;
-  store: StoreData;
 }
+
+export interface OrderPayload {
+  isCompleted: boolean;
+  orderTotal: number;
+  orderDate: string;
+  customerId: number;
+  paymentMethodId: number;
+  orderStatus: OrderStatus;
+  estimatedDeliveryDate: string;
+  orderItems: OrderItemsData[];
+}
+
+export interface OrderResponse extends OrderPayload {
+  id: number;
+};
