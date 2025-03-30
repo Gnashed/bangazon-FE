@@ -1,7 +1,12 @@
-## Welcome to Bangazon, an e-commerce web app!
+## Welcome to Bangazon, an e-commerce web app! Stay tuned for updates as this project is still ongoing.
 
 # Tech Stack:
-Frontend: React Next.js | TypeScript | React Bootstrap | Google Firebase Authentication
-Backend: C# | ASP.NET Core Minimal Web API
+Frontend: 
+- React Next.js
+- TypeScript
+- Google Firebase Authentication
+- Bootstrap
 
-## Stay tuned for updates as this project is still ongoing.
+Backend:
+- C#
+- ASP.NET Core Minimal Web API
