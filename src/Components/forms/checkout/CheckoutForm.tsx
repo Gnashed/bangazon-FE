@@ -8,6 +8,7 @@ import { PaymentMethodData, OrderPayload, OrderItemsData } from '@/types/api';
 import { createOrder } from '@/api/orderData';
 import { CartContext } from '@/utils/context/CartContext';
 import { useRouter } from 'next/navigation';
+import { useClearCart } from '@/utils/context/CartContext';
 
 interface FormDataProps {
   firstName: string;
@@ -22,6 +23,8 @@ interface FormDataProps {
 export default function CheckoutForm() {
   const router = useRouter();
   const cartItems = useContext(CartContext);
+  const clearCart = useClearCart();
+
   console.log(cartItems);
   const [paymentMethodData, setPaymentMethodData] = useState<PaymentMethodData[] | null>(null);
 
@@ -80,6 +83,7 @@ export default function CheckoutForm() {
 
     // TODO: Pass in the cart items
     createOrder(orderObjectPayload, orderItems).then(() => {
+      clearCart();
       router.push('/');
     });
     // console.log(orderObjectPayload, orderItems);
