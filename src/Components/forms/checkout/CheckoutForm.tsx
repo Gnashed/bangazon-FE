@@ -38,7 +38,6 @@ export default function CheckoutForm() {
     paymentMethod: Number('')
   });
 
-  // const filteredCart = cartItems.filter((item) => item.product);
   let cartTotal = 0;
   const orderItems: OrderItemsData[] = [];
 
@@ -80,12 +79,17 @@ export default function CheckoutForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let confirmationUrl = '';
 
     // TODO: Pass in the cart items
-    createOrder(orderObjectPayload, orderItems).then(() => {
-      clearCart();
-      router.push('/');
-    });
+    createOrder(orderObjectPayload, orderItems)
+      .then((orderResponse) => {
+        clearCart();
+        
+        confirmationUrl = `/order/confirmed?id=${encodeURIComponent(orderResponse.id)}&estimatedDeliveryDate=${encodeURIComponent(orderResponse.estimatedDeliveryDate)}`;
+
+        router.push(confirmationUrl)
+      });
     // console.log(orderObjectPayload, orderItems);
   };
 
