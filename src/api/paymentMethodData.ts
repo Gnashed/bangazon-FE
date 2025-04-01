@@ -38,3 +38,23 @@ export const getCustomerPaymentMethods = async (customerId: number): Promise<Pay
     throw error;
   }
 };
+
+export const deletePaymentMethod = async (paymentMethodId: number) => {
+  try {
+    const response = await fetch(`${endpoint}/api/payment-method/${paymentMethodId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error status code: ${response.status}`);
+    }
+
+    return response.json;
+
+  } catch (error) {
+    console.error('There was a problem deleting the requested item.', error);
+    throw error;
+  }
+}

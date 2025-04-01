@@ -41,9 +41,9 @@ export default function AddPaymentMethod({ customerId }) {
       securityCode: formData.securityCode,
       expirationDate: formatingTheExpirationDate,
       customerId: customerId,
+    }).then(() => {
+      handleClose();
     });
-
-    handleClose();
   };
 
   return (

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/utils/context/authContext';
 import { CustomerData } from '@/types/api';
 import { getCustomerByUid } from '@/api/customerData';
+import { deletePaymentMethod } from '@/api/paymentMethodData';
 import Button from 'react-bootstrap/Button';
 // import Modal from 'react-bootstrap/Modal';
 import ProfileInformation from '@/Components/forms/profile/ProfileInformation';
@@ -11,13 +12,14 @@ import AddPaymentMethod from '@/Components/forms/payment-methods/AddPaymentMetho
 
 export default function ProfilePage() {
   const { user } = useAuth();
-
-  // React Bootstrap Modal
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-
   const [customerInfo, setCustomerInfo] = useState<CustomerData | null>(null);
+
+  const deletePaymentMethodFromView = (id: number) => {
+    if(window.confirm(`Removing a payment method deletes it from your account. Click ok to confirm.`)) {
+      deletePaymentMethod(id).then(() => getCustomerByUid(user!.uid)).then(setCustomerInfo);
+    };
+  }
+
   useEffect(() => {
     getCustomerByUid(user!.uid).then(setCustomerInfo);
   }, [user]);
@@ -46,7 +48,7 @@ export default function ProfilePage() {
         {customerInfo?.paymentMethods.map((pm) => (
           <div key={pm.id} className="d-flex align-items-baseline">
             <p>Card {pm.cardNumber}</p>
-            <Button variant="link">Remove</Button>
+            <Button variant="link" onClick={() => deletePaymentMethodFromView(pm.id)}>Remove</Button>
           </div>
         ))}
         
