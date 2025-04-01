@@ -18,8 +18,8 @@ export default function OrderDetailsPage({ params }: ParamsProp) {
   const shippingCharge = 6.99;
   const totalItems = orderData?.orderItems.length;
   // Example of optional chaining, or ??. Since, orderData.orderTotal can be null, setting a default value through option chaining prevents code editor/IDE warnings since a default value is used instead.
-  const flooredOrderTotal = Math.floor((orderData?.orderTotal ?? 0 + shippingCharge) * 100);
-  const finalTotal = flooredOrderTotal / 100;
+  const flooredOrderTotal = Math.floor((orderData?.orderTotal ?? 0) * 100);
+  const finalTotal = (flooredOrderTotal / 100) + shippingCharge;
 
   useEffect(() => {
     getOrderById(id).then(setOrderData);
@@ -46,7 +46,7 @@ export default function OrderDetailsPage({ params }: ParamsProp) {
           </div>
         </div>
 
-        <div className="right-side w-35">
+        <div className="right-side w-50">
           <h2>Items</h2>
           {/* FIXME: Consider typing product */}
           {orderData?.orderItems.map((item) => (
@@ -59,10 +59,12 @@ export default function OrderDetailsPage({ params }: ParamsProp) {
               itemQuantity={item.itemQuantity}
             />
           ))}
-          <div>
-            <p>Total Items: {totalItems}</p>
-            <p>Shipping: ${shippingCharge}</p>
-            <p>Total: $ {finalTotal}</p>
+          <div className='my-5'>
+            <strong>
+              <p>Total Items: {totalItems}</p>
+              <p>Shipping: ${shippingCharge}</p>
+              <p>Total: $ {finalTotal.toFixed(2)}</p>
+            </strong>
           </div>
         </div>
       </div>
