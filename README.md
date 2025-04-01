@@ -10,3 +10,10 @@ Frontend:
 Backend:
 - C#
 - ASP.NET Core Minimal Web API
+
+# Links to Project Boards:
+- Frontend: https://github.com/users/Gnashed/projects/9
+- Backend: https://github.com/users/Gnashed/projects/8
+
+# ERD
+https://dbdiagram.io/d/bangazon-project-nss-DO-NOT-DELETE-67be6335263d6cf9a0758fa4
