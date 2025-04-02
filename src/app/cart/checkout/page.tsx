@@ -22,6 +22,8 @@ export default function CheckoutPage() {
     return cartTotal;
   });
 
+  const cartTotalWithShipping = (cartTotal + shippingCharge).toFixed(2);
+
   return (
     <div>
       <h1 className='text-center my-5'>Checkout</h1>
@@ -46,7 +48,7 @@ export default function CheckoutPage() {
               />
             ))}
             <h4>Shipping: $6.99</h4>
-            <h4>Total: ${cartTotal + shippingCharge}</h4>
+            <h4>Total: ${cartTotalWithShipping}</h4>
         
         </div>
       </div>

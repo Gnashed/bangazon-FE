@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { useAddToCart } from '@/utils/context/CartContext';
 import Toast from 'react-bootstrap/Toast';
 import Form from 'react-bootstrap/Form';
-import { CartContext } from '@/utils/context/CartContext';
+// import { CartContext } from '@/utils/context/CartContext';
 
 interface ParamsProp {
   params: {
@@ -19,7 +19,7 @@ interface ParamsProp {
 
 export default function ViewProductInfo({ params }: ParamsProp) {
   const addToCart = useAddToCart(); // Get the function
-  const cartItems = useContext(CartContext);
+  // const cartItems = useContext(CartContext);
 
   const { id } = params;
   const [product, setProduct] = useState<SingleProductData | null>(null);
