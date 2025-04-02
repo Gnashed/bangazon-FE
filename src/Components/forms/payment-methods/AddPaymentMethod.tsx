@@ -10,7 +10,7 @@ interface AddPaymentMethodProps {
   expirationDate: string;
 }
 
-export default function AddPaymentMethod({ customerId }) {
+export default function AddPaymentMethod({ customerId, onUpdate }) {
   // React Bootstrap Modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -41,9 +41,10 @@ export default function AddPaymentMethod({ customerId }) {
       securityCode: formData.securityCode,
       expirationDate: formatingTheExpirationDate,
       customerId: customerId,
+    }).then(() => {
+      handleClose();
+      onUpdate();
     });
-
-    handleClose();
   };
 
   return (

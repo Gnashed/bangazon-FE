@@ -22,7 +22,7 @@ export interface CartItem {
   id: number,
   itemQuantity: number;
   product: ProductData;
-}; 
+};
 
 type CartAction =
   | { type: 'added'; id: number; itemQuantity: number; product: ProductData }

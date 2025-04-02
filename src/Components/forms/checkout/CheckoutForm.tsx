@@ -176,4 +176,4 @@ export default function CheckoutForm() {
       </Form>
     </div>
   );
-}
+};

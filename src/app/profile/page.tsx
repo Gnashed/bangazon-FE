@@ -2,25 +2,41 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/utils/context/authContext';
-import { CustomerData } from '@/types/api';
+import { CustomerData, PaymentMethodData } from '@/types/api';
 import { getCustomerByUid } from '@/api/customerData';
+import { deletePaymentMethod, getCustomerPaymentMethods } from '@/api/paymentMethodData';
 import Button from 'react-bootstrap/Button';
-// import Modal from 'react-bootstrap/Modal';
 import ProfileInformation from '@/Components/forms/profile/ProfileInformation';
 import AddPaymentMethod from '@/Components/forms/payment-methods/AddPaymentMethod';
 
 export default function ProfilePage() {
   const { user } = useAuth();
 
-  // React Bootstrap Modal
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-
   const [customerInfo, setCustomerInfo] = useState<CustomerData | null>(null);
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethodData[] | null>(null);
+  const customerId = customerInfo ? customerInfo.id : null;
+
+  const refreshPaymentMethods = () => {
+    if (customerId) {
+      getCustomerPaymentMethods(customerId).then(setPaymentMethods);
+    }
+  };
+
+  const deletePaymentMethodFromView = (id: number) => {
+    if(window.confirm(`Removing a payment method deletes it from your account. Click ok to confirm.`)) {
+      deletePaymentMethod(id).then(() => refreshPaymentMethods());
+    }
+  };
+
   useEffect(() => {
     getCustomerByUid(user!.uid).then(setCustomerInfo);
   }, [user]);
+
+  useEffect(() => {
+    if (customerId) {
+      getCustomerPaymentMethods(customerId).then(setPaymentMethods);
+    }
+  }, [customerId]);
 
   return (
     <div className="d-flex flex-column align-items-center my-3">
@@ -43,14 +59,17 @@ export default function ProfilePage() {
 
       <div className="my-5">
         <h4>Payment Methods</h4>
-        {customerInfo?.paymentMethods.map((pm) => (
+        {paymentMethods?.map((pm) => (
           <div key={pm.id} className="d-flex align-items-baseline">
             <p>Card {pm.cardNumber}</p>
-            <Button variant="link">Remove</Button>
+            <Button variant="link" onClick={() => deletePaymentMethodFromView(pm.id)}>Remove</Button>
           </div>
         ))}
         
-        <AddPaymentMethod customerId={customerInfo?.id}/>
+        <AddPaymentMethod 
+          customerId={customerInfo?.id}
+          onUpdate={refreshPaymentMethods}
+        />
       </div>
 
       <div className="my-5">
@@ -59,4 +78,4 @@ export default function ProfilePage() {
       </div>
     </div>
   );
-};
+}
